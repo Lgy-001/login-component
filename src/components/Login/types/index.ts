@@ -1,5 +1,8 @@
 export interface loginType{
-title:string
+    title: string
+    className?: string
+    style?: React.CSSProperties
+    onFinish?: (value: { account: string; password: string }) => void
 }
 
 export interface LoginUtilType{

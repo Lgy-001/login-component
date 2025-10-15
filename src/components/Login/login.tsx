@@ -6,21 +6,24 @@ import { Button, Form, message } from "antd";
 
 import AccountInput from "../account-input/account-input";
 import PasswordInput from "../password-input/password-input";
+import { useCallback, useState } from "react";
+import classNames from "classnames";
 
 const Login = (props: loginType) => {
-
-
+    const { className, style, title, onFinish } = props;
+    const [passwordInfo, setPasswordInfo] = useState<string>("invalid");
     const [messageApi, contextHolder] = message.useMessage();
-
-
+    const checkPasswordStrength = useCallback((result: string) => {
+        setPasswordInfo(result);
+    }, []);
     return (
         <>
             {contextHolder}
-            <div className="loginLayout">
-                <div className="loginHeader">{props.title}</div>
+            <div className={classNames(["login-layout"], className)} style={style}>
+                <div className="login-header">{title}</div>
                 <Form
                     onFinish={(value) => {
-                        console.log(value);
+                        onFinish?.(value)
                     }}
                 >
                     <Form.Item
@@ -35,12 +38,13 @@ const Login = (props: loginType) => {
                         name="password"
                         rules={[{ required: true, message: "请输入密码" }]}
                     >
-                        <PasswordInput />
+                        <PasswordInput checkPasswordStrength={checkPasswordStrength} />
                     </Form.Item>
                     <Button
+
                         htmlType="submit"
-                    // className={`login ${passwordInfo === "invalid" ? "err" : "success"
-                    //     }`}
+                        className={`login-button ${passwordInfo === "invalid" ? "err" : "success"
+                            }`}
                     >
                         登录
                     </Button>

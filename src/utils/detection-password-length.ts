@@ -2,7 +2,7 @@
 
 // strong:极强 high:高 medium:中 low:弱 invalid:无效
 export function detectionPasswordStrength(password: string): 'low' | 'medium' | 'high' | 'strong' | 'invalid' {
-  
+  if(password.length === 0) return 'invalid';
   const hasDigit = /\d/;              
   const hasLower = /[a-z]/;        
   const hasUpper = /[A-Z]/;            
