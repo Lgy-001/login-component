@@ -38,7 +38,7 @@ const Login = (props: loginType) => {
                         name="password"
                         rules={[{ required: true, message: "请输入密码" }]}
                     >
-                        <PasswordInput checkPasswordStrength={checkPasswordStrength} />
+                        <PasswordInput checkPasswordStrength={checkPasswordStrength} isShowIllustrate={true} />
                     </Form.Item>
                     <Button
 

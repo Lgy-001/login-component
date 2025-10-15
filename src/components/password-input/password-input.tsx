@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import globalFunction from "../../utils";
 import pwd from "@/assets/images/pwd.png";
 import downEye from "@/assets/images/downEye.png";
 import openEye from "@/assets/images/upEye.png";
 import type { PasswordInputProps } from "./types";
 import "./index.less";
+import classNames from "classnames";
 const PasswordInput = (props: PasswordInputProps) => {
-    const { checkPasswordStrength } = props;
+    const { checkPasswordStrength, isShowIllustrate, title = "密码", placeholder = "请输入密码", checkPasswordContinuous } = props;
     const [isOpen, setIsOpen] = useState(false);
     const [password, setPassword] = useState<string>("");
 
     return (
         <div className="password-input-layout">
             <div className="password-input-title">
-                <div>*密码</div>
-                <div className="password-input-illustrate">?</div>
+                <div>*{title}</div>
+                <div className={classNames(["password-input-illustrate"], { 'show': isShowIllustrate })}>?</div>
             </div>
             <div className="password-input-field">
                 <img className="password-input-icon" src={pwd} alt="user" />
@@ -23,23 +24,16 @@ const PasswordInput = (props: PasswordInputProps) => {
                     minLength={1}
                     maxLength={100}
                     value={password}
-                    placeholder="请输入密码"
+                    placeholder={placeholder}
                     onChange={(e) => {
                         setPassword(globalFunction.delSpace(e.target.value));
-                        console.log('debug-33', e.target.value);
-
                         checkPasswordStrength(
-                            globalFunction.detectionPasswordStrength(e.target.value)
+                            globalFunction.detectionPasswordStrength(globalFunction.delSpace(e.target.value))
                         );
-
+                        checkPasswordContinuous(globalFunction.detectionContinuousPassword(globalFunction.delSpace(e.target.value)));
                     }}
                     onBlur={() => {
-                        const result =
-                            globalFunction.detectionContinuousPassword(password);
-                        // if (!result.valid) {
-                        //     message.error(result.reason);
-                        // }
-                        console.log(result);
+
                     }}
                     type={isOpen ? "text" : "password"}
                 />
