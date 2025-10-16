@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import user from "@/assets/images/user.png";
 import globalFunction from "../../utils";
 import classNames from "classnames";
 import './index.less'
 import type { accountInputType } from "./types";
-const AccountInput = (props: accountInputType) => {
+const AccountInput = memo((props: accountInputType) => {
     const { className, style } = props
     const [account, setAccount] = useState<string>("");
     return (
@@ -26,5 +26,5 @@ const AccountInput = (props: accountInputType) => {
             </div>
         </div>
     )
-}
+})
 export default AccountInput;

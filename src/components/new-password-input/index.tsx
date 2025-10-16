@@ -3,16 +3,17 @@ import PasswordInput from "../password-input//password-input";
 import type { NewPasswordInputProps } from "./type";
 import { Flex, message, Progress } from 'antd';
 import './index.less'
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { switchPasswordInfo } from "@/utils/switch-password-info";
 import { useUpdateEffect } from "ahooks";
-const NewPasswordInput = (props: NewPasswordInputProps) => {
+const NewPasswordInput = memo((props: NewPasswordInputProps) => {
     const { showInfo = false,
         steps = 4,
         strokeWidth = 3,
         type = "line",
         size = 'default',
-        trailColor = '#968d8dff'
+        trailColor = '#968d8dff',
+        enterPassword,
     } = props;
     const [passwordInfo, setPasswordInfo] = useState<string>("invalid");
     const [passwordContinuousInfo, setPasswordContinuousInfo] = useState<{ valid: boolean; reason?: string | undefined; }>({ valid: true, reason: undefined });
@@ -34,8 +35,11 @@ const NewPasswordInput = (props: NewPasswordInputProps) => {
     return (
         <div className="new-password-input-layout">
             <PasswordInput
+                enterPassword={enterPassword}
+                prompt="密码长度不得少于8位由数字、大&小写字母、符号组件（至少4选3）密码包含弱密码口令:admin"
                 placeholder="请输入新密码"
                 title="新密码"
+                isInconShow={false}
                 isShowIllustrate={true}
                 checkPasswordContinuous={checkPasswordContinuous}
                 checkPasswordStrength={checkPasswordStrength}
@@ -47,16 +51,16 @@ const NewPasswordInput = (props: NewPasswordInputProps) => {
                         showInfo={showInfo}
                         strokeWidth={strokeWidth}
                         type={type}
-                        percent={passwordInfoResult?.percent}
+                        percent={!passwordContinuousInfo.valid ? 0 : passwordInfoResult?.percent}
                         strokeColor={passwordInfoResult?.strokeColor}
                         size={size}
                         trailColor={trailColor}
                     />
                 </Flex>
-                <div className="new-password-input-progress-text">{passwordInfoResult?.percent === 25 ? '低' : passwordInfoResult?.percent === 50 ? '中' : passwordInfoResult?.percent === 75 ? '高' : passwordInfoResult?.percent === 100 ? '极' : ''}</div>
+                {passwordContinuousInfo.valid && <div className="new-password-input-progress-text">{passwordInfoResult?.percent === 25 ? '低' : passwordInfoResult?.percent === 50 ? '中' : passwordInfoResult?.percent === 75 ? '高' : passwordInfoResult?.percent === 100 ? '极' : ''}</div>}
             </div>
             {!passwordContinuousInfo.valid && <div className="new-password-input-error">密码设置不符合规范</div>}
         </div>
     )
-}
+})
 export default NewPasswordInput;
