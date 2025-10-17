@@ -15,6 +15,7 @@ const PasswordInput = memo((props: PasswordInputProps) => {
         prompt,
         enterPassword,
         isInconShow = true,
+        onBlur,
         checkPasswordContinuous } = props;
     const [isOpen, setIsOpen] = useState(false);
     const [password, setPassword] = useState<string>("");
@@ -48,9 +49,7 @@ const PasswordInput = memo((props: PasswordInputProps) => {
                         );
                         checkPasswordContinuous(globalFunction.detectionContinuousPassword(globalFunction.delSpace(e.target.value)));
                     }}
-                    onBlur={() => {
-
-                    }}
+                    onBlur={onBlur}
                     type={isOpen ? "text" : "password"}
                 />
                 {!isOpen ? (

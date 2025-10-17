@@ -3,6 +3,8 @@ export interface loginType{
     className?: string
     style?: React.CSSProperties
     onFinish?: (value: { account: string; password: string }) => void
+    onAccountBlur: (e: React.FocusEvent<HTMLInputElement>) => void
+    onPasswordBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 export interface LoginUtilType{

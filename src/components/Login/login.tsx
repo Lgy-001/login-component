@@ -10,7 +10,7 @@ import { useCallback, useState } from "react";
 import classNames from "classnames";
 
 const Login = (props: loginType) => {
-    const { className, style, title, onFinish } = props;
+    const { className, style, title, onFinish, onAccountBlur, onPasswordBlur } = props;
     const [passwordInfo, setPasswordInfo] = useState<string>("invalid");
     const [messageApi, contextHolder] = message.useMessage();
     const [passwordContinuousInfo, setPasswordContinuousInfo] = useState<{ valid: boolean; reason?: string | undefined; }>({ valid: true, reason: undefined });
@@ -35,14 +35,14 @@ const Login = (props: loginType) => {
                         name="account"
                         rules={[{ required: true, message: "账号不能为空" }]}
                     >
-                        <AccountInput />
+                        <AccountInput onBlur={onAccountBlur} />
                     </Form.Item>
                     <Form.Item
                         label=""
                         name="password"
                         rules={[{ required: true, message: "请输入密码" }]}
                     >
-                        <PasswordInput checkPasswordStrength={checkPasswordStrength} checkPasswordContinuous={checkPasswordContinuous} isShowIllustrate={true} />
+                        <PasswordInput onBlur={onPasswordBlur} checkPasswordStrength={checkPasswordStrength} checkPasswordContinuous={checkPasswordContinuous} isShowIllustrate={true} />
                     </Form.Item>
                     <Button
 

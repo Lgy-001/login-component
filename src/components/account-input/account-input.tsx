@@ -5,7 +5,7 @@ import classNames from "classnames";
 import './index.less'
 import type { accountInputType } from "./types";
 const AccountInput = memo((props: accountInputType) => {
-    const { className, style } = props
+    const { className, style, onBlur } = props
     const [account, setAccount] = useState<string>("");
     return (
         <div style={style} className={classNames("account-input-layout", className)}>
@@ -17,6 +17,7 @@ const AccountInput = memo((props: accountInputType) => {
                     placeholder="请输入账号"
                     type="text"
                     minLength={1}
+                    onBlur={onBlur}
                     maxLength={20}
                     value={account}
                     onChange={(e) => {

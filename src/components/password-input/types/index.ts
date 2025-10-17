@@ -6,7 +6,8 @@ export interface PasswordInputProps {
   placeholder?: string;
   prompt?: string;
   enterPassword?: (value: string) => void;
-  isInconShow?:boolean
+  isInconShow?: boolean;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   checkPasswordContinuous: (result: { valid: boolean; reason?: string | undefined; }) => void;
   checkPasswordStrength: (result: string) => void;
 }
