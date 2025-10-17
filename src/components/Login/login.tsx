@@ -13,8 +13,12 @@ const Login = (props: loginType) => {
     const { className, style, title, onFinish } = props;
     const [passwordInfo, setPasswordInfo] = useState<string>("invalid");
     const [messageApi, contextHolder] = message.useMessage();
+    const [passwordContinuousInfo, setPasswordContinuousInfo] = useState<{ valid: boolean; reason?: string | undefined; }>({ valid: true, reason: undefined });
     const checkPasswordStrength = useCallback((result: string) => {
         setPasswordInfo(result);
+    }, []);
+    const checkPasswordContinuous = useCallback((result: { valid: boolean; reason?: string | undefined; }) => {
+        setPasswordContinuousInfo(result);
     }, []);
     return (
         <>
@@ -38,7 +42,7 @@ const Login = (props: loginType) => {
                         name="password"
                         rules={[{ required: true, message: "请输入密码" }]}
                     >
-                        <PasswordInput checkPasswordStrength={checkPasswordStrength} isShowIllustrate={true} />
+                        <PasswordInput checkPasswordStrength={checkPasswordStrength} checkPasswordContinuous={checkPasswordContinuous} isShowIllustrate={true} />
                     </Form.Item>
                     <Button
 

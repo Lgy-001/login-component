@@ -34,7 +34,7 @@ export function detectionPasswordStrength(password: string): 'low' | 'medium' | 
     return 'medium';
   }
 
-  if (/^\d{6,}$/.test(password)) {
+  if (/^\d{8,}$/.test(password)) {
     return 'low';
   }
 
